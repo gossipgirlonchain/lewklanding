@@ -1,0 +1,6 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" fill="black"/>
+  <text x="60" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">LEWK</text>
+  <circle cx="90" cy="20" r="2" fill="white"/>
+  <circle cx="95" cy="20" r="2" fill="white"/>
+</svg>
