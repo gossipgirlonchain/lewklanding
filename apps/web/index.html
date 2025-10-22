@@ -1,23 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LEWK</title>
     <style>
-      @font-face {
-        font-family: 'Jaoren';
-        src: url('/fonts/Jaoren.otf') format('opentype'),
-             url('/fonts/Jaoren.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
+        @font-face {
+            font-family: 'Jaoren';
+            src: url('/fonts/Jaoren.otf') format('opentype'),
+                 url('/fonts/Jaoren.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 10;
+        }
+        
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+        
+        .container {
+            padding: 80px 24px 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .header img {
+            max-width: 100%;
+            height: auto;
+            image-rendering: high-quality;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .signup-box {
+            background-color: #1a1a1a;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+        }
+        
+        .signup-title {
+            font-size: 24px;
+            margin-bottom: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .pink {
+            color: #FF53B9;
+        }
+        
+        .email-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #333;
+            border-radius: 12px;
+            background-color: #0a0a0a;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-family: 'Jaoren', sans-serif;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #FF53B9;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #FF53B9;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e045a0;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .success {
+            background-color: #1a4d1a;
+            color: #4ade80;
+        }
+        
+        .error {
+            background-color: #4d1a1a;
+            color: #f87171;
+        }
+        
+        .count {
+            margin-top: 16px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        @media (min-width: 768px) {
+            .logo img {
+                height: 40px;
+            }
+            
+            .container {
+                padding: 100px 32px 40px;
+            }
+            
+            .signup-box {
+                padding: 48px 32px;
+            }
+            
+            .signup-title {
+                font-size: 28px;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <img src="/lewklogowhie.png" alt="LEWK">
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="/header-text.svg" alt="Header Text">
+        </div>
+
+        <!-- Signup Form -->
+        <div class="signup-box">
+            <h2 class="signup-title">
+                Sign up to <span class="pink">CLOCK IT</span> first
+            </h2>
+            
+            <form id="signupForm">
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    class="email-input" 
+                    placeholder="Enter your email"
+                    required
+                >
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    GET EARLY ACCESS
+                </button>
+            </form>
+            
+            <div id="message"></div>
+            <div id="count" class="count"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const emailInput = document.getElementById('emailInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const messageDiv = document.getElementById('message');
+        const countDiv = document.getElementById('count');
+
+        // Get signup count on page load
+        fetch('/api/signups')
+            .then(response => response.json())
+            .then(data => {
+                if (data.count !== undefined) {
+                    countDiv.textContent = `Join ${data.count} others ready for the unexpected`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching count:', error);
+            });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showMessage('Please enter your email', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing up...';
+            
+            try {
+                const response = await fetch('/api/signups', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('You\'re in! We\'ll let you know when the magic happens', 'success');
+                    form.style.display = 'none';
+                    // Update count
+                    fetch('/api/signups')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.count !== undefined) {
+                                countDiv.textContent = `Join ${data.count} others ready for the unexpected`;
+                            }
+                        });
+                } else {
+                    showMessage(data.error || 'Something went wrong. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('Something went wrong. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'GET EARLY ACCESS';
+            }
+        });
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
 </html>
