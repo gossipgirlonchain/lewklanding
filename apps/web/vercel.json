@@ -1,11 +1,16 @@
 {
   "buildCommand": "bun run build",
-  "outputDirectory": "build/client",
   "installCommand": "bun install",
+  "outputDirectory": "build/client",
+  "functions": {
+    "build/server/index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/api/server"
     }
   ]
 }
