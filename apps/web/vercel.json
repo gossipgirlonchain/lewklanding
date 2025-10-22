@@ -1,9 +1,8 @@
 {
   "buildCommand": "bun run build",
   "installCommand": "bun install",
-  "outputDirectory": "build/client",
   "functions": {
-    "build/server/index.js": {
+    "api/server.js": {
       "runtime": "nodejs18.x"
     }
   },
