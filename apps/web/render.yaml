@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: lewk-fun
+    env: node
+    buildCommand: bun run build
+    startCommand: bun run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+    healthCheckPath: /
