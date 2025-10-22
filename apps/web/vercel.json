@@ -1,15 +1,5 @@
 {
   "buildCommand": "bun run build",
   "installCommand": "bun install",
-  "functions": {
-    "api/server.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/server"
-    }
-  ]
+  "outputDirectory": "build/client"
 }
