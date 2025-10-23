@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWK - MAIN FILE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 10;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .tagline {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        
+        .signup-box {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            border: 1px solid rgba(255, 83, 185, 0.2);
+        }
+        
+        .signup-title {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .pink {
+            color: #FF53B9;
+        }
+        
+        .email-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #333;
+            border-radius: 12px;
+            background-color: #0a0a0a;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #FF53B9;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #FF53B9;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e045a0;
+        }
+        
+        .message {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .success {
+            background-color: #1a4d1a;
+            color: #4ade80;
+        }
+        
+        .error {
+            background-color: #4d1a1a;
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <h1 style="font-size: 1.5rem; font-weight: bold; color: white;">LEWK.</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 style="font-size: 3rem; font-weight: 300; line-height: 1.1; margin-bottom: 20px;">
+                WHO COULD HAVE<br>
+                <span style="color: #FF53B9;">PREDICTED</span> THIS
+            </h1>
+        </div>
+
+        <!-- Tagline -->
+        <p class="tagline">GET EARLY ACCESS</p>
+
+        <!-- Signup Form -->
+        <div class="signup-box">
+            <h2 class="signup-title">
+                Sign up to <span class="pink">CLOCK IT</span> first
+            </h2>
+            
+            <form id="signupForm">
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    class="email-input" 
+                    placeholder="Enter your email"
+                    required
+                >
+                <button type="submit" class="submit-btn">
+                    GET EARLY ACCESS
+                </button>
+            </form>
+            
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const emailInput = document.getElementById('emailInput');
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showMessage('Please enter your email', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/signups', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('You\'re in! We\'ll let you know when the magic happens', 'success');
+                    form.style.display = 'none';
+                } else {
+                    showMessage(data.error || 'Something went wrong. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('Something went wrong. Please try again.', 'error');
+            }
+        });
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
