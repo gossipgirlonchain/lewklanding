@@ -15,5 +15,6 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "ignoreCommand": "echo 'Static site - no build needed'"
 }
