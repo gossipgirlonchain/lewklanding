@@ -10,7 +10,14 @@
     {
       "source": "/quiz",
       "destination": "https://cue.market",
-      "permanent": true
+      "permanent": true,
+      "statusCode": 301
+    },
+    {
+      "source": "/quiz/:path*",
+      "destination": "https://cue.market/:path*",
+      "permanent": true,
+      "statusCode": 301
     }
   ],
   "routes": [
