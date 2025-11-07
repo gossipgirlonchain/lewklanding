@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Content Layer */
+.content-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #000;
+    box-sizing: border-box;
+}
+
+.content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* ON CUE Image - Above the 'b' in LABS, keeping height */
+.on-cue-image {
+    position: absolute;
+    top: 120px;
+    left: 60%;
+    max-width: 150px;
+    width: auto;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: auto;
+    filter: contrast(1.1);
+    z-index: 2;
+}
+
+/* GOSSIP LABS Image - Center */
+.gossip-labs-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 60%;
+    width: auto;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: auto;
+    filter: contrast(1.2) brightness(1.05);
+    z-index: 2;
+}
+
+/* CHIPPS Logo - Below GOSSIP LABS, smaller size, moved south west */
+.chipps-logo-image {
+    position: absolute;
+    top: 70%;
+    left: 40%;
+    transform: translateX(-50%);
+    max-width: 150px;
+    width: auto;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: auto;
+    z-index: 2;
+}
+
+/* Portrait - Bottom Right with rounded corners, no border, show full image */
+.portrait-image {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: auto;
+    height: auto;
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+    border-radius: 8px;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+/* Black Overlay with Torch Effect */
+.overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #000 !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+    transition: none;
+    will-change: mask-position, mask-image;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .gossip-labs-image {
+        max-width: 90%;
+    }
+    
+    .on-cue-image {
+        max-width: 120px;
+        top: 20px;
+        right: 20px;
+    }
+    
+    .chipps-logo-image {
+        max-width: 250px;
+    }
+    
+    .portrait-image {
+        width: 80px;
+        height: 80px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .content-wrapper {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gossip-labs-image {
+        max-width: 95%;
+    }
+    
+    .chipps-logo-image {
+        max-width: 200px;
+    }
+    
+    .on-cue-image {
+        max-width: 100px;
+    }
+}
