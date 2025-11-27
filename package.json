@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "echo 'Static site - no build needed'"
+    "build": "cd apps/web && npm install && npm run build",
+    "install": "cd apps/web && npm install"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4"
   }
 }
+
