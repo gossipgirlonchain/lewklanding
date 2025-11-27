@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "cd apps/web && npm install && npm run build",
-    "install": "cd apps/web && npm install"
+    "postinstall": "cd apps/web && npm install",
+    "build": "cd apps/web && npm run build"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4"
