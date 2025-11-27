@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "vercel-install": "cd apps/web && npm install",
+    "postinstall": "cd apps/web && npm install",
     "build": "cd apps/web && npm run build"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
-    "next": "^14.2.0"
+    "@neondatabase/serverless": "^0.10.4"
   }
 }
 
