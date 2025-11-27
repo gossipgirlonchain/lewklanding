@@ -1,34 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/quiz",
-      "destination": "https://cue.market",
-      "permanent": true,
-      "statusCode": 301
-    },
-    {
-      "source": "/quiz/:path*",
-      "destination": "https://cue.market/:path*",
-      "permanent": true,
-      "statusCode": 301
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "ignoreCommand": "echo 'Static site - no build needed'"
+  "buildCommand": "cd apps/web && npm install && npm run build",
+  "outputDirectory": "apps/web/.next",
+  "framework": "nextjs",
+  "installCommand": "cd apps/web && npm install",
+  "devCommand": "cd apps/web && npm run dev"
 }
