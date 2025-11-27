@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "install": "npm install --ignore-scripts && cd apps/web && npm install",
+    "postinstall": "cd apps/web && npm install",
     "build": "cd apps/web && npm run build"
   },
   "dependencies": {
