@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "install": "npm install --prefix apps/web",
-    "postinstall": "cd apps/web && npm install",
+    "preinstall": "echo 'Installing root dependencies...'",
+    "install": "cd apps/web && npm install",
+    "postinstall": "echo 'Installation complete'",
     "build": "cd apps/web && npm run build"
   },
   "dependencies": {
